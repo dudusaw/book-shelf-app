@@ -17,21 +17,21 @@ public class MainController {
 
     private final RequestHandlerService requestHandlerService;
 
+    public static final int MAX_ELEMENTS_PER_PAGE = 40; // from 0 to 40
+
     public MainController(RequestHandlerService requestHandlerService) {
         this.requestHandlerService = requestHandlerService;
     }
 
     @GetMapping("/")
-    public String home(Model ui, HttpServletRequest request) {
+    public String home() {
         return "index";
     }
 
     @GetMapping("/process-request")
-    public String processRequest(Model ui, HttpServletRequest request,
-                                 @RequestParam String inputText, @RequestParam(defaultValue = "0") int startIndex) {
-        int maxElements = 40;
-        SearchResult result = requestHandlerService.processRequest(inputText, startIndex);
-        Pagination pagination = new Pagination(startIndex, maxElements, inputText, result.getTotalItems());
+    public String processRequest(Model ui, @RequestParam String inputText, @RequestParam(defaultValue = "0") int startIndex) {
+        SearchResult result = requestHandlerService.processRequest(inputText, startIndex, MAX_ELEMENTS_PER_PAGE);
+        Pagination pagination = new Pagination(startIndex, MAX_ELEMENTS_PER_PAGE, inputText, result.getTotalItems());
 
         ui.addAttribute("pagination", pagination);
         ui.addAttribute("searchResult", result);

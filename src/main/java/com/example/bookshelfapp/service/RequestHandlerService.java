@@ -16,16 +16,14 @@ public class RequestHandlerService {
     private final RestTemplate restTemplate;
     private final BookRepository bookRepository;
 
-    private static final String googleApiKey = "AIzaSyBAJgqIvsSBTnQtgDJZYdSiXeqUHUzSYgc";
-
     public RequestHandlerService(RestTemplate restTemplate, BookRepository bookRepository) {
         this.restTemplate = restTemplate;
         this.bookRepository = bookRepository;
     }
 
-    public SearchResult processRequest(String input, int startIndex) {
+    public SearchResult processRequest(String input, int startIndex, int maxElements) {
         bookRepository.clear();
-        String url = constructUrl(input, startIndex, 40);
+        String url = constructUrl(input, startIndex, maxElements);
         SearchResult result = restTemplate.getForObject(url, SearchResult.class);
         assert result != null;
         assert result.getItems() != null;
@@ -40,19 +38,12 @@ public class RequestHandlerService {
     private String constructUrl(String input, int startIndex, int maxElements) {
         StringBuilder url = new StringBuilder("https://www.googleapis.com/books/v1/volumes?q=");
         String[] inputArr = input.trim().split(" ");
-        for (int i = 0; i < inputArr.length; i++) {
-            url.append(inputArr[i]);
-            if (i != inputArr.length - 1) {
-                url.append("+");
-            }
-        }
+        url.append(String.join("+", inputArr));
         url.append("&startIndex=");
         url.append(startIndex);
         url.append("&maxResults=");
         url.append(maxElements);
         url.append("&printType=books");
-        //url.append("&key=");
-        //url.append(googleApiKey);
         return url.toString();
     }
 }

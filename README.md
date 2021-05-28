@@ -1,4 +1,4 @@
-#book-shelf-app
+# book-shelf-app
 
 Simple web application that just searches books and displays them.
 

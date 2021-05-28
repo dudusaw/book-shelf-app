@@ -23,11 +23,12 @@ public class RequestHandlerService {
         this.bookRepository = bookRepository;
     }
 
-    public SearchResult processRequest(String input) {
-        String url = constructUrl(input, 0, 40);
+    public SearchResult processRequest(String input, int startIndex) {
+        bookRepository.clear();
+        String url = constructUrl(input, startIndex, 40);
         SearchResult result = restTemplate.getForObject(url, SearchResult.class);
         assert result != null;
-        bookRepository.clear();
+        assert result.getItems() != null;
         bookRepository.addItems(result.getItems());
         return result;
     }

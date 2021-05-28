@@ -27,13 +27,16 @@ body {
     margin: 8px 0;
     box-sizing: border-box;
     border: 3px solid #ccc;
-    transition-property: color;
-    transition-duration: 0.5s;
+    transition: 0.5s;
     outline: none;
     font-size: x-large;
     font-weight: bold;
 }
   
+.input-field:hover {
+    border: 3px solid #555;
+}
+
 .input-field:focus {
     border: 3px solid #555;
 }
@@ -44,8 +47,9 @@ body {
     padding: 14px 40px;
     font-size: x-large;
     background-color: white;
+    border-radius: 20px;
     color: black;
-    border: 2px solid #555555;
+    border: 4px solid #555555;
     transition-duration: 0.4s;
     cursor: pointer;
     text-align: center;
@@ -87,8 +91,9 @@ body {
 }
 
 .card-image {
+    max-width: 90%;
     height: 60%;
-    border: 2px solid #5c5c8a;
+    border: 10px solid #415d6f2b;
     margin: 0 auto 8px;
 }
 
@@ -102,6 +107,38 @@ body {
     margin: 16px;
     text-decoration: none;
     color: black;
+}
+
+.paging-center {
+    text-align: center;
+    margin-bottom: 32px;
+}
+
+.paging-block {
+    display: inline-block;
+    font-size: x-large;
+    background-color: rgba(42, 42, 42, 0.1);
+    padding: 16px;
+    border-radius: 8px;
+}
+
+.paging-block a {
+    color: black;
+    float: left;
+    padding: 16px 32px;
+    margin: 0 4px;
+    text-decoration: none;
+    border-radius: 5px;
+    transition: background-color .2s;
+}
+
+.paging-block a.active {
+    background-color: rgba(255, 156, 71, 0.73);
+    color: white;
+}
+
+.paging-block a:hover:not(.active) {
+    background-color: rgba(255, 156, 71, 0.36);
 }
 
 /* details */

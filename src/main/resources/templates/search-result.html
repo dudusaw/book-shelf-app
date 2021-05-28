@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+
+<head th:replace="~{fragments :: head-fragment}">
+</head>
+
+<body>
+
+    <div th:replace="~{fragments :: input-fragment}">
+    </div>
+
+    <div class="list-block">
+        <div class="list-header">
+            <h2 th:text="|${searchResult.totalItems} books found|">5 books found</h2>
+        </div>
+        <div class="element-list">
+            <a class="item-ref" href="https://google.com"
+               th:each="item : ${searchResult.items}" th:object="${item.volumeInfo}" th:href="@{/details(id=${item.id})}">
+                <div class="item-card">
+                    <img class="card-image" src="https://covers.openlibrary.org/b/id/8097228-L.jpg"
+                         th:src="*{imageLinks} ? *{imageLinks.thumbnail} : 'https://books.google.ru/googlebooks/images/no_cover_thumb.gif'"
+                         alt="image unavailable">
+                    <div class="desc-block">
+                        <h3 th:text="*{title}">
+                            Savage Sunrise
+                        </h3>
+                        <h4 th:if="*{not #lists.isEmpty(authors)}" th:text="|by *{authors.get(0)}|">by Cassie Edwards</h4>
+                    </div>
+                </div>
+            </a>
+        </div>
+        <div class="paging-block">
+            <a href="#">Prev page</a>
+            <a href="#">Next page</a>
+        </div>
+    </div>
+</body>
+
+</html>

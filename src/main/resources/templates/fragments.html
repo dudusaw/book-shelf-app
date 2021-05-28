@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+
+<head th:fragment="head-fragment">
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Book searching app</title>
+    <link rel="stylesheet" type="text/css" th:href="@{/my-styles.css}" href="../static/my-styles.css">
+    <link rel="preconnect" href="https://fonts.gstatic.com">
+    <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@100&display=swap" rel="stylesheet">
+</head>
+
+<body>
+    <div th:fragment="input-fragment">
+        <div class="container header">
+            <h1>
+                Book searching app
+            </h1>
+        </div>
+        <div class="container search-box">
+            <h3>Type your request</h3>
+            <form class="input-container" action="process-request" th:action="@{/process-request}">
+                <input class="input-field" type="text" name="inputText">
+                <button class="search-button" type="submit">Search</button>
+            </form>
+        </div>
+    </div>
+</body>
+</html>

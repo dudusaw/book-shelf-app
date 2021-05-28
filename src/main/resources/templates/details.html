@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+
+<head th:replace="~{fragments :: head-fragment}">
+</head>
+
+<body>
+    <div class="container header header-block">
+        <h1>
+            Book searching app
+        </h1>
+        <h1>
+            <a href="javascript:history.back()" class="back-link">Go back</a>
+        </h1>
+    </div>
+    <div class="content-block">
+        <img class="detail-img" src="https://covers.openlibrary.org/b/id/9271451-L.jpg"
+             th:src="${book.imageLinks} ? ${book.imageLinks.thumbnail} : 'https://books.google.ru/googlebooks/images/no_cover_thumb.gif'" alt="">
+        <div class="content-details">
+            <h3>
+                <a href="https://openlibrary.org/books/OL7949728M/The_Shining" th:text="${book.title}"
+                   th:href="@{https://books.google.ru/books(id=${bookId})}" target="_blank">
+                    The Shining (1977)
+                </a>
+            </h3>
+            <h4 th:text="'by ' + ${book.authors.get(0)}">by Stephen King</h4>
+            <br>
+            <h4 th:text="|This edition was published in ${book.publishedDate} by ${book.publisher}|">
+                This edition was published in 2002? by Pocket Books in New York, USA.
+                Written in English</h4>
+            <br>
+            <h4 th:each="iden : ${book.industryIdentifiers}">
+                <span th:text="|*{iden.type}: *{iden.identifier}|">
+                    ISDN: 723645978365
+                </span>
+                <br>
+                <br th:if="*{idenStat.last}">
+            </h4>
+            <h4 th:text="|Page count: ${book.pageCount}.|">
+                Page count: 255.
+            </h4>
+            <br>
+            <p th:text="${book.description}">Lorem, ipsum dolor sit amet consectetur adipisicing elit. Ad, delectus facere fuga deleniti modi iusto
+                libero laborum repellendus vel officia et. Fugit ad assumenda libero qui debitis alias impedit dolores
+                amet modi in rem atque natus, ipsam blanditiis nemo excepturi voluptatem soluta voluptatibus, quibusdam
+                eligendi illo, reiciendis quidem! Non iure accusamus expedita molestias, numquam a consequuntur debitis
+                ut, architecto illum quisquam nostrum! Provident accusantium possimus deleniti repudiandae harum vero
+                rem nobis facilis beatae rerum sequi magni odio atque minus voluptate, officiis veniam in maiores ab.
+                Sint, nihil labore tempora maxime quidem iusto ipsam vel dignissimos aliquam enim sapiente nesciunt in.
+            </p>
+        </div>
+    </div>
+</body>
+
+</html>

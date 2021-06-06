@@ -21,7 +21,7 @@
     </div>
     <div class="container search-box">
         <h3>Type your request</h3>
-        <form class="input-container" action="process-request" th:action="@{/process-request}">
+        <form class="input-container" action="process-request" th:action="@{/books/process-request}">
             <input class="input-field" type="text" name="inputText">
             <button class="search-button" type="submit">Search</button>
         </form>
@@ -34,7 +34,7 @@
         </div>
         <div class="element-list">
             <a class="item-ref" href="https://google.com"
-               th:each="item : ${searchResult.items}" th:object="${item.volumeInfo}" th:href="@{/details(id=${item.id})}">
+               th:each="item : ${searchResult.items}" th:object="${item.volumeInfo}" th:href="@{/books/details(id=${item.id})}">
                 <div class="item-card">
                     <img class="card-image" src="https://covers.openlibrary.org/b/id/8097228-L.jpg"
                          th:src="*{imageLinks} ? *{imageLinks.thumbnail} : 'https://books.google.ru/googlebooks/images/no_cover_thumb.gif'"
@@ -47,11 +47,11 @@
             </a>
         </div>
         <div class="paging-center">
-            <div class="paging-block" th:object="${pagination}">
-                <a href="#" th:href="@{/process-request(inputText=*{inputText}, startIndex=(*{startIndex} - *{maxElements}))}"
+            <div class="paging-block" th:object="${searchResult.pagination}">
+                <a href="#" th:href="@{/books/process-request(inputText=*{inputText}, startIndex=(*{startIndex} - *{maxElements}))}"
                    th:if="*{isFirstPage()}">&lt;</a>
                 <a href="#" class="active" th:text="*{currentPage}">1</a>
-                <a href="#" th:href="@{/process-request(inputText=*{inputText}, startIndex=(*{startIndex} + *{maxElements}))}"
+                <a href="#" th:href="@{/books/process-request(inputText=*{inputText}, startIndex=(*{startIndex} + *{maxElements}))}"
                    th:unless="*{isLastPage}">&gt;</a>
             </div>
         </div>

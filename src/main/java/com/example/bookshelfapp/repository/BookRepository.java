@@ -1,10 +1,9 @@
 package com.example.bookshelfapp.repository;
 
-import com.example.bookshelfapp.entity.Book;
-import com.example.bookshelfapp.entity.ResultItem;
+import com.example.bookshelfapp.entity.model.Book;
+import com.example.bookshelfapp.entity.model.ResultItem;
 import org.springframework.stereotype.Repository;
 
-import java.util.HashMap;
 import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;

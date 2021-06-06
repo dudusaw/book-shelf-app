@@ -1,36 +1,45 @@
 package com.example.bookshelfapp.service;
 
-import com.example.bookshelfapp.entity.Book;
-import com.example.bookshelfapp.entity.SearchResult;
+import com.example.bookshelfapp.entity.model.Book;
+import com.example.bookshelfapp.entity.model.Pagination;
+import com.example.bookshelfapp.entity.model.SearchResult;
 import com.example.bookshelfapp.repository.BookRepository;
-import com.fasterxml.jackson.databind.ObjectMapper;
-import org.springframework.http.ResponseEntity;
-import org.springframework.stereotype.Component;
+import lombok.Getter;
+import lombok.Setter;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
-import org.springframework.web.client.RestClientException;
 import org.springframework.web.client.RestTemplate;
 
 @Service
-public class RequestHandlerService {
+public class RequestHandlerService implements ISearchService {
 
     private final RestTemplate restTemplate;
     private final BookRepository bookRepository;
+
+    @Setter
+    @Getter
+    @Value("${app.max-elements-per-page}")
+    private int maxElementsPerPage;
 
     public RequestHandlerService(RestTemplate restTemplate, BookRepository bookRepository) {
         this.restTemplate = restTemplate;
         this.bookRepository = bookRepository;
     }
 
-    public SearchResult processRequest(String input, int startIndex, int maxElements) {
+    @Override
+    public SearchResult processSearch(String input, int startIndex) {
         bookRepository.clear();
-        String url = constructUrl(input, startIndex, maxElements);
+        String url = constructUrl(input, startIndex, maxElementsPerPage);
         SearchResult result = restTemplate.getForObject(url, SearchResult.class);
         assert result != null;
         assert result.getItems() != null;
         bookRepository.addItems(result.getItems());
+        Pagination pagination = new Pagination(startIndex, input, maxElementsPerPage, result.getTotalItems());
+        result.setPagination(pagination);
         return result;
     }
 
+    @Override
     public Book getBookById(String id) {
         return bookRepository.getById(id);
     }
